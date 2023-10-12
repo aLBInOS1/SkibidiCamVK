@@ -102,10 +102,7 @@
           auth();
           sendSDKtype();
           if (showAdBanner==false) vkBridge.subscribe(eventHandler);
-          vkBridge.send('VKWebAppShowBannerAd', { 
-            banner_location: 'top',
-            can_close: false
-          });
+          showBanner();
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
@@ -154,10 +151,17 @@
       function setUserData(data){
         console.log(data);
         vkBridge.send('VKWebAppStorageSet',{"key": "_save" , "value": data}).then(_info =>{
-          console.log("Saved!")});
-        vkBridge.send('VKWebAppShowBannerAd', { 
-            banner_location: 'top',
-            can_close: false
+        console.log("Saved!")});
+        showBanner();
+      }
+
+      function showBanner() {
+        vkBridge.send('VKWebAppCheckBannerAd').then((data) => { 
+            if (!data.result) {
+                vkBridge.send('VKWebAppShowBannerAd', { banner_location: 'top',can_close: false });
+            }
+        }).catch((error) => {
+            vkBridge.send('VKWebAppShowBannerAd', { banner_location: 'top',can_close: false });
         });
       }
 
