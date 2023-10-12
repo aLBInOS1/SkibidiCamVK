@@ -103,7 +103,7 @@
           sendSDKtype();
           if (showAdBanner==false) vkBridge.subscribe(eventHandler);
           vkBridge.send('VKWebAppShowBannerAd', { 
-            banner_location: 'up',
+            banner_location: 'top',
             can_close: false
           });
           loadingBar.style.display = "none";
@@ -156,7 +156,7 @@
         vkBridge.send('VKWebAppStorageSet',{"key": "_save" , "value": data}).then(_info =>{
           console.log("Saved!")});
         vkBridge.send('VKWebAppShowBannerAd', { 
-            banner_location: 'up',
+            banner_location: 'top',
             can_close: false
         });
       }
